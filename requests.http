@@ -1,0 +1,5 @@
+POST http://localhost:8080/currency_add?code=USD&fullname=United%20States%20dollar&sign=$
+POST http://localhost:8080/exchange_rates_add?id1=2&id2=4&rate=1,09
+GET http://localhost:8080/currency
+GET http://localhost:8080/currency/EUR
+GET http://localhost:8080/exchange_rates
