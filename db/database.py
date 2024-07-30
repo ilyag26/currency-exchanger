@@ -21,7 +21,7 @@ def formate_data(data):
 
 #function that formate data to json view and getting from db one to many relation
 def formate_data_exchange(data):
-    Db1 = Db("currency.db")
+    Db1 = Db("db/currency.db")
     ar = []
     for i in range(0, len(data)):
         date = {
@@ -29,6 +29,22 @@ def formate_data_exchange(data):
             "BaseCurrencyId" : Db1.show_currency_by_id(data[i][1]),
             "TargetCurrencyId" : Db1.show_currency_by_id(data[i][2]),
             "Rate" : data[i][3]
+        }
+        ar.append(date)
+    return ar
+
+#function that formate data to json view and getting from db one to many relation
+def formate_exchange_amount(data,amount,converted_amount):
+    Db1 = Db("db/currency.db")
+    ar = []
+    for i in range(0, len(data)):
+        date = {
+            "Id" : data[i][0],
+            "BaseCurrencyId" : Db1.show_currency_by_id(data[i][1]),
+            "TargetCurrencyId" : Db1.show_currency_by_id(data[i][2]),
+            "Rate" : data[i][3],
+            "amount" : amount,
+            "convertedAmount" : converted_amount
         }
         ar.append(date)
     return ar
@@ -43,7 +59,9 @@ class Db:
 
 #GET request to get all currencies from db
     def show_currency(self):
-        currency = self.cursor.execute(f"SELECT * FROM `Currencies` group by id")
+        # currency = self.cursor.execute(f"DELETE FROM `ExchangeRates` WHERE id = 4")
+        # return self.conn.commit()
+        currency = self.cursor.execute(f"SELECT * FROM `Currencies`")
         return formate_data(currency.fetchall())
 
 #GET request to get all exchange rates from db
@@ -64,7 +82,11 @@ class Db:
 #GET request to get specific currency's id from db by code(EX: USD)
     def show_currency_id_code(self, code):
         currency = self.cursor.execute(f"SELECT id FROM `Currencies` WHERE code = ?", (code,))
-        result = currency.fetchall()[0][0]
+        pare = currency.fetchall()
+        if len(pare):
+            result = pare[0][0]
+        else:
+            result = 0
         return result
 
 #GET request to get specific exchange pare from db by BaseCurrencyId and TargetCurrencyId(EX: BaseCurrencyId: 1, TargetCurrencyId: 2)
@@ -102,6 +124,16 @@ class Db:
         currency = self.cursor.execute("UPDATE `ExchangeRates` SET `rate` = ? WHERE BaseCurrencyId = ? AND TargetCurrencyId = ?",(rates,BaseCurrencyId,TargetCurrencyId))
         return self.conn.commit()
 
+#GET request to get rate value from database by pare's id(EX: 1)
+    def get_rate_value(self, pare_id):
+        currency = self.cursor.execute("SELECT `Rate` FROM `ExchangeRates` WHERE id = ?",(pare_id,))
+        rate = currency.fetchall()
+        if len(rate):
+            result = rate[0][0]
+        else:
+            result = 0
+        return result
+    
 #function to close connection
     def close(self):
         self.conn.close()
