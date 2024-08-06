@@ -116,4 +116,6 @@ def exchange_count():
             rate = 0
     else:
         rate = 0
-    return formate_exchange_amount(Db1.show_exchange_pare_id(pare_id),amount,converted_amount) if rate != 0 else message_show("Pare not exist"), 200 if rate else 404
+    return jsonify(
+        formate_exchange_amount(Db1.show_exchange_pare_id(pare_id),amount,converted_amount)
+        ) if rate != 0 else message_show("Pare not exist"), 200 if rate else 404
