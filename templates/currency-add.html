@@ -25,7 +25,14 @@
                     <input type="text" class="form-control" id="signInput" name="sign">
                 </div>
                 <button type="submit" class="btn btn-primary">Add</button>
-              </form>
+            </form>
+            {%if code1 == "success"%}
+            <br>
+            <div class="alert alert-success" role="alert">Currency was added successfully!</div>
+            {%elif code1 == "error"%}
+            <br>
+            <div class="alert alert-danger" role="alert">Currency wasn't added!</div>
+            {% endif %}
         </div>
 </body>
 </html>

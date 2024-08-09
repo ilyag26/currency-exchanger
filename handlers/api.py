@@ -16,7 +16,7 @@ def currency_add():
     fullname = request.form['fullname']
     sign = request.form['sign']
     db1.add_currency(code, fullname, sign)
-    return jsonify(db1.show_currency_url(code)), 200
+    return redirect("/add_currency/success", code="200")
 
 
 # request to create new exchange pare

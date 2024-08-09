@@ -2,7 +2,8 @@ import requests
 
 from db.database import *
 from flask import (Flask, request,
-                   jsonify, render_template)
+                   jsonify, render_template,
+                   redirect)
 
 # init class FLASK
 app = Flask(__name__, template_folder='../templates', static_folder='../static')
@@ -23,3 +24,8 @@ def index():
 @app.route('/add_currency')
 def add_currency():
     return render_template('currency-add.html')
+
+# rendering html template
+@app.route('/add_currency/<code>')
+def add_currency_code(code):
+    return render_template('currency-add.html', code1 = code)
