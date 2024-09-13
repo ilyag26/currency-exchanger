@@ -16,15 +16,15 @@
                 
                 <li style="font-weight: bold;">
                     Pare: 
-                    {% for content2 in content.BaseCurrencyId %}
+                    {% for content2 in content.baseCurrencyId %}
                         {{content2.code}}
                     {% endfor %} - 
-                    {% for content2 in content.TargetCurrencyId %}
+                    {% for content2 in content.targetCurrencyId %}
                         {{content2.code}}
                     {% endfor %}
                 </li>
-                
-                <li>Rate: {{content.Rate}}</li>
+                <li>Pare id: {{content.id}}</li>
+                <li>Rate: {{content.rate}}</li>
                 <hr class="my-4">
             </ul>
             {% endfor %}

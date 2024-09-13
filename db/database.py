@@ -28,10 +28,10 @@ def formate_data_exchange(data):
     ar = []
     for i in range(0, len(data)):
         date = {
-            "Id": data[i][0],
-            "BaseCurrencyId": db1.show_currency_by_id(data[i][1]),
-            "TargetCurrencyId": db1.show_currency_by_id(data[i][2]),
-            "Rate": data[i][3]
+            "id": data[i][0],
+            "baseCurrencyId": db1.show_currency_by_id(data[i][1]),
+            "targetCurrencyId": db1.show_currency_by_id(data[i][2]),
+            "rate": data[i][3]
         }
         ar.append(date)
     return ar
@@ -43,10 +43,10 @@ def formate_exchange_amount(data, amount, converted_amount):
     ar = []
     for i in range(0, len(data)):
         date = {
-            "Id": data[i][0],
-            "BaseCurrencyId": db1.show_currency_by_id(data[i][1]),
-            "TargetCurrencyId": db1.show_currency_by_id(data[i][2]),
-            "Rate": data[i][3],
+            "id": data[i][0],
+            "baseCurrencyId": db1.show_currency_by_id(data[i][1]),
+            "targetCurrencyId": db1.show_currency_by_id(data[i][2]),
+            "rate": data[i][3],
             "amount": amount,
             "convertedAmount": converted_amount
         }

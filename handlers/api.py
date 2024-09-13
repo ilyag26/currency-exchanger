@@ -23,9 +23,9 @@ def currency_add():
 @app.route('/exchangeRates', methods=['POST'])
 def exchange_rates_add():
     db1 = Db(db_path)
-    id1 = request.args.get('id1')
-    id2 = request.args.get('id2')
-    rate = request.args.get('rate')
+    id1 = request.form['id1']
+    id2 = request.form['id2']
+    rate = request.form['rate']
     db1.add_currency_rate(id1, id2, rate)
     return message_show("Success"), 200
 
@@ -108,10 +108,8 @@ def exchange_count():
         if pare_id:
             # getting rate amount from database by pare id
             rate = db1.get_rate_value(pare_id)
-            # deleting , from string to convert to float
-            rate_changed = rate.replace(",", "")
             # counting converted amount
-            converted_amount = float(amount)*float(rate_changed)/100
+            converted_amount = float(amount)*float(rate)
         else:
             rate = 0
     else:

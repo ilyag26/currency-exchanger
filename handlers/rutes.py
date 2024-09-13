@@ -28,7 +28,7 @@ def add_currency():
     return render_template('currency-add.html')
 
 @app.route('/add_currency/<code>')
-def add_currency_code(code):
+def add_currency_result(code):
     return render_template('currency-add.html', code1 = code)
 
 @app.route('/rate')
@@ -36,3 +36,11 @@ def show_rate():
     req = requests.get("http://localhost:8080/exchangeRates")
     json_form = req.json()
     return render_template('rate.html', data = json_form)
+
+@app.route('/add_rate')
+def add_rate():
+    return render_template('rate-add.html')
+
+@app.route('/add_rate/<code>')
+def add_rate_result(code):
+    return render_template('rate.html', code1 = code)
