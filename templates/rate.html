@@ -10,10 +10,24 @@
 </head>
 <body>
         <div class="container bg-light p-5">
-            <h1 class="display-6">Main page</h1>
-            <button type="button" class="btn btn-primary"><a href="/currency_list">Available currencies</a></button>
-            <button type="button" class="btn btn-primary"><a href="/add_currency">Add currency</a></button>
-            <button type="button" class="btn btn-primary"><a href="/rate">Check rate</a></button>
+            <h1 class="display-4">Rates:</h1>
+            {% for content in data %}
+            <ul>
+                
+                <li style="font-weight: bold;">
+                    Pare: 
+                    {% for content2 in content.BaseCurrencyId %}
+                        {{content2.code}}
+                    {% endfor %} - 
+                    {% for content2 in content.TargetCurrencyId %}
+                        {{content2.code}}
+                    {% endfor %}
+                </li>
+                
+                <li>Rate: {{content.Rate}}</li>
+                <hr class="my-4">
+            </ul>
+            {% endfor %}
         </div>
 </body>
 </html>
