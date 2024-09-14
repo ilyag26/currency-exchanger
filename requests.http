@@ -3,6 +3,6 @@ GET http://localhost:8080/currency/EUR
 GET http://localhost:8080/exchangeRates
 GET http://localhost:8080/exchangeRate/EURUSD
 GET http://localhost:8080/exchange?from=EUR&to=USD&amount=10
-POST http://localhost:8080/exchangeRates?id1=2&id2=4&rate=1,09
+POST http://localhost:8080/exchangeRates?id1=2&id2=4&rate=1.09
 POST http://localhost:8080/currency_add?code=USD&fullname=United%20States%20dollar&sign=$
 PATCH http://localhost:8080/exchangeRate/EURUSD?rate=1,11

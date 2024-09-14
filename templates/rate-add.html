@@ -10,15 +10,31 @@
 </head>
 <body>
         <div class="container bg-light p-5">
-            <h1 class="display-4">Add currency to data base:</h1>
-            <form action="{{ url_for('exchange_rates_add') }}" method="POST">
+            <h1 class="display-4">Add new rate exchange to data base:</h1>
+            <form action="{{ url_for('add_rate_process') }}" method="POST">
                 <div class="mb-3">
-                  <label for="nameInput" class="form-label">First currency id</label>
-                  <input type="text" class="form-control" id="firstCodeInput" name="id1">
+                  <label for="nameInput" class="form-label">First currency id:</label><br>
+                  <select id="firstCurrency" name="id1">
+                    {% for content in data %}
+
+                    <option value="{{content.id}}">
+                      {{content.code}}
+                    </option>
+
+                    {% endfor %}
+                  </select>
                 </div>
                 <div class="mb-3">
-                  <label for="codeInput" class="form-label">Second currency id</label>
-                  <input type="text" class="form-control" id="secondCodeInput" name="id2">
+                  <label for="codeInput" class="form-label">Second currency id:</label><br>
+                 <select id="secondCurrency" name="id2">
+                    {% for content in data %}
+                    
+                    <option value="{{content.id}}">
+                      {{content.code}}
+                    </option>
+
+                    {% endfor %}
+                  </select>
                 </div>
                 <div class="mb-3">
                     <label for="signInput" class="form-label">Currency rate</label>

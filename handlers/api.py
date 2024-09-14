@@ -12,20 +12,20 @@ def error(error):
 @app.route('/currency_add', methods=['POST'])
 def currency_add():
     db1 = Db(db_path)
-    code = request.form['code']
-    fullname = request.form['fullname']
-    sign = request.form['sign']
+    code = request.args.get('code')
+    fullname = request.args.get('fullname')
+    sign = request.args.get('sign')
     db1.add_currency(code, fullname, sign)
-    return redirect("/add_currency/success", code="200")
+    return jsonify(db1.show_currency_url(code)), 200
 
 
 # request to create new exchange pare
 @app.route('/exchangeRates', methods=['POST'])
 def exchange_rates_add():
     db1 = Db(db_path)
-    id1 = request.form['id1']
-    id2 = request.form['id2']
-    rate = request.form['rate']
+    id1 = request.args.get('id1')
+    id2 = request.args.get('id2')
+    rate = request.args.get('rate')
     db1.add_currency_rate(id1, id2, rate)
     return message_show("Success"), 200
 
@@ -76,6 +76,7 @@ def exchange_path_edit(code):
     rate = request.args.get('rate')
     # check if request has right length and if has rate
     if len(code) == 6 and rate:
+        #getting first and second code from request url
         first_code = db1.show_currency_id_code(code[0:3])
         second_code = db1.show_currency_id_code(code[3:6])
         # check if exchange pare exist or no
@@ -94,9 +95,9 @@ def exchange_path_edit(code):
 def exchange_count():
     db1 = Db(db_path)
     # getting requests params from request url
-    base_code = request.args.get("from")
-    target_code = request.args.get("to")
-    amount = request.args.get("amount")
+    base_code = request.args.get('from')
+    target_code = request.args.get('to')
+    amount = request.args.get('amount')
     # checking if params seted correctly
     if len(base_code) == 3 and len(target_code) == 3:
         # getting id in data base by code of currency
