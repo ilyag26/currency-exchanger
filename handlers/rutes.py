@@ -105,4 +105,4 @@ def exchange_detect():
     #sending request to get rate's list
     req2 = requests.get("http://localhost:8080/exchangeRates")
     json_form2 = req2.json()
-    return render_template('pages/exchange-result.html', data = json_form2, data_rate = json_form, code1 = "success")
+    return render_template('pages/exchange-result.html', data = json_form2, data_rate = json_form, code1 = "success" if amount != "0" else "error")

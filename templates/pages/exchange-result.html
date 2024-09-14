@@ -32,14 +32,14 @@
             </div>
             <div class="mb-3">
                 <label for="signInput" class="form-label">Amount:</label>
-                <input type="text" class="form-control" id="rateInput" name="amount">
+                <input type="text" class="form-control" id="rateInput" value="0" name="amount">
             </div>
             <button type="submit" class="btn btn-primary">Exchange</button>
         </form>
 
         {%if code1 == "success" %}
         <br>
-        <div class="alert alert-success" role="alert">
+        <div class="alert alert-primary" role="alert">
           Exchange result:<br>
           
           {% for content in data_rate %}
@@ -57,11 +57,10 @@
             {% endfor %}
 
           {% endfor %}
-
         </div>
         {%elif code1 == "error"%}
-        <br>
-        <div class="alert alert-danger" role="alert">Rate wasn't added!</div>
+            <br>
+            <div class="alert alert-danger" role="alert">The value must not be 0!</div>
         {% endif %}
     </div>
 </body>
