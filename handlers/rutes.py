@@ -26,12 +26,12 @@ def list_currency():
     #sending get request to get list of currencies
     req = requests.get("http://localhost:8080/currency")
     json_form = req.json()
-    return render_template('list_currency.html', data = json_form)
+    return render_template('pages/list_currency.html', data = json_form)
 
 
 @app.route('/add_currency')
 def add_currency():
-    return render_template('currency-add.html')
+    return render_template('pages/currency-add.html')
 
 
 @app.route('/process_currency', methods=['POST'])
@@ -42,7 +42,7 @@ def add_currency_result():
     sign = request.form['sign']
     #sending post request to add new currency to db
     requests.post(f"http://localhost:8080/currency_add?code={code}&fullname={fullname}&sign={sign}")
-    return render_template('currency-add.html', code1 = "success")
+    return render_template('pages/currency-add.html', code1 = "success")
 
 
 @app.route('/rate')
@@ -50,7 +50,7 @@ def show_rate():
     #sending get request to get list of exchange rates that exist
     req = requests.get("http://localhost:8080/exchangeRates")
     json_form = req.json()
-    return render_template('rate.html', data = json_form)
+    return render_template('pages/rate.html', data = json_form)
 
 
 @app.route('/add_rate')
@@ -58,7 +58,7 @@ def add_rate():
     #sending get request to get list of currencies
     req = requests.get("http://localhost:8080/currency")
     json_form = req.json()
-    return render_template('rate-add.html', data = json_form)
+    return render_template('pages/rate-add.html', data = json_form)
 
 
 @app.route('/process_rate', methods=['POST', 'GET'])
@@ -72,7 +72,7 @@ def add_rate_process():
     #sending get request to get list of currencies
     req = requests.get("http://localhost:8080/currency")
     json_form = req.json()
-    return render_template('rate-add.html', code1 = "success", data=json_form)
+    return render_template('pages/rate-add.html', code1 = "success", data=json_form)
 
 
 @app.route('/make_exchange')
@@ -80,7 +80,7 @@ def exchange_route():
     #sending get request to get list of exchange rates
     req = requests.get("http://localhost:8080/exchangeRates")
     json_form = req.json()
-    return render_template('exchange-result.html', data = json_form)
+    return render_template('pages/exchange-result.html', data = json_form)
 
 
 @app.route("/exchange_detect", methods=["GET"])
@@ -105,4 +105,4 @@ def exchange_detect():
     #sending request to get rate's list
     req2 = requests.get("http://localhost:8080/exchangeRates")
     json_form2 = req2.json()
-    return render_template('exchange-result.html', data = json_form2, data_rate = json_form, code1 = "success")
+    return render_template('pages/exchange-result.html', data = json_form2, data_rate = json_form, code1 = "success")
