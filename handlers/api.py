@@ -2,7 +2,7 @@ from handlers.rutes import *
 
 # showing error
 @app.errorhandler(404)
-def error(error):
+def error():
     return jsonify(
         message = "Page not found"
     ), 404
@@ -12,6 +12,7 @@ def error(error):
 @app.route('/currency_add', methods=['POST'])
 def currency_add():
     db1 = Db(db_path)
+    #getting request params
     code = request.args.get('code')
     fullname = request.args.get('fullname')
     sign = request.args.get('sign')
@@ -56,6 +57,7 @@ def currency_path(code):
 def exchange_path(code):
     Db1 = Db(db_path)
     if len(code) == 6:
+        #splitting code from request
         first_code = Db1.show_currency_id_code(code[0:3])
         second_code = Db1.show_currency_id_code(code[3:6])
         # getting rate variable
@@ -89,6 +91,7 @@ def exchange_path_edit(code):
         first_code = 0
         second_code = 0
     return message_show("Sucess") if first_code != 0 and second_code != 0 else message_show("Pare not exist"), 200 if rate else 404
+
 
 # request to calculation of the transfer of a certain amount of funds from one currency to another
 @app.route("/exchange", methods=["GET"])

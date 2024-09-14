@@ -1,6 +1,6 @@
 import sqlite3
 
-
+# function that formate message view
 def message_show(msg):
     date = {
         "message": msg
@@ -29,7 +29,9 @@ def formate_data_exchange(data):
     for i in range(0, len(data)):
         date = {
             "id": data[i][0],
+            #rendering base currency by id 
             "baseCurrencyId": db1.show_currency_by_id(data[i][1]),
+            #rendering target currency by id 
             "targetCurrencyId": db1.show_currency_by_id(data[i][2]),
             "rate": data[i][3]
         }
@@ -44,7 +46,9 @@ def formate_exchange_amount(data, amount, converted_amount):
     for i in range(0, len(data)):
         date = {
             "id": data[i][0],
+            #rendering base currency by id 
             "baseCurrencyId": db1.show_currency_by_id(data[i][1]),
+            #rendering target currency by id 
             "targetCurrencyId": db1.show_currency_by_id(data[i][2]),
             "rate": data[i][3],
             "amount": amount,
