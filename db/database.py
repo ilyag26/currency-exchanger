@@ -129,6 +129,18 @@ class Db:
             (id1, id2, rate))
         return self.conn.commit()
 
+    def get_id_target(self, id):
+        code_target = self.cursor.execute(f"SELECT `targetcurrencyid` FROM `ExchangeRates` WHERE id = ?", (id,))
+        return code_target.fetchall()[0]
+    
+    def get_id_base(self, id):
+        code_target = self.cursor.execute(f"SELECT `basecurrencyid` FROM `ExchangeRates` WHERE id = ?", (id,))
+        return code_target.fetchall()[0]
+    
+    def get_code_currency(self, id):
+        code_target = self.cursor.execute(f"SELECT `code` FROM `Currencies` WHERE id = ?", (id,))
+        return code_target.fetchall()[0]
+
     # GET request to get specific exchange rate by id from db by id(EX: 1)
     def show_exchange_pare(self, code):
         self.cursor.execute(f"SELECT * FROM `Currencies` WHERE id = ?", (code,))

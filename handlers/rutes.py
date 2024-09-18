@@ -52,6 +52,12 @@ def show_rate():
     json_form = req.json()
     return render_template('pages/rate.html', data = json_form)
 
+@app.route('/change_rate')
+def change_rate():
+    #sending get request to get list of exchange rates that exist
+    req = requests.get("http://localhost:8080/exchangeRates")
+    json_form = req.json()
+    return render_template('pages/change-rate.html', data = json_form)
 
 @app.route('/add_rate')
 def add_rate():
@@ -106,3 +112,26 @@ def exchange_detect():
     req2 = requests.get("http://localhost:8080/exchangeRates")
     json_form2 = req2.json()
     return render_template('pages/exchange-result.html', data = json_form2, data_rate = json_form, code1 = "success" if amount != "0" else "error")
+
+@app.route('/change_rate_process')
+def change_rate_process():
+    db1 = Db(db_path)
+    #get url params from request
+    id = request.args.get('pare_id')
+    rate = request.args.get('rate')
+    #get id of base currency
+    id_base = db1.get_id_base(id)[0]
+    #get id of target currency
+    id_target = db1.get_id_target(id)[0]
+    #get code of target currency
+    code_base = db1.get_code_currency(id_base)[0]
+    #get code of target currency
+    code_target = db1.get_code_currency(id_target)[0]
+    #concatenate two code (EX: USD+EUR->USDEUR)
+    code = str(code_base) + str(code_target)
+    #sending request to change rate
+    requests.patch(f"http://localhost:8080/exchangeRate/{code}?rate={rate}")
+    #sending request to get rate's list
+    req = requests.get("http://localhost:8080/exchangeRates")
+    json_form = req.json()
+    return render_template('pages/change-rate.html', data=json_form, code1 = "success")
