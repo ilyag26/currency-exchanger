@@ -17,8 +17,11 @@
                 <li>Code: {{content.code}}</li>
                 <li>Name: {{content.fullname}}</li>
                 <li>Sign: {{content.sign}}</li>
-                <hr class="my-4">
             </ul>
+
+            <a href="/delete?id={{content.id}}"><img src="{{ url_for('static', filename='img/delete.png') }}" style="width:3%; height:3%;"></a>
+            
+            <hr class="my-4">
             {% endfor %}
         </div>
 </body>

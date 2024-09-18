@@ -17,7 +17,7 @@ def currency_add():
     fullname = request.args.get('fullname')
     sign = request.args.get('sign')
     if db1.check_exist('code', code) == True:
-        return jsonify(message_show("Pare already exist")), 400
+        return jsonify(message_show("Currency already exist")), 400
     else:
         db1.add_currency(code, fullname, sign)
         return jsonify(db1.show_currency_url(code)), 200
@@ -124,3 +124,10 @@ def exchange_count():
     return jsonify(
         formate_exchange_amount(db1.show_exchange_pare_id(pare_id),amount,converted_amount)
         ) if rate != 0 else message_show("Pare not exist"), 200 if rate else 404
+
+@app.route("/delete_currency", methods=['DELETE'])
+def delete_currency():
+    db1 = Db(db_path)
+    id = request.args.get("id")
+    db1.delete_currency_id(id)
+    return jsonify(message_show("Currency was deleted successfully!"))
