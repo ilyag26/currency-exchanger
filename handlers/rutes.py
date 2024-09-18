@@ -41,8 +41,14 @@ def add_currency_result():
     fullname = request.form['fullname']
     sign = request.form['sign']
     #sending post request to add new currency to db
-    requests.post(f"http://localhost:8080/currency_add?code={code}&fullname={fullname}&sign={sign}")
-    return render_template('pages/currency-add.html', code1 = "success")
+    req = requests.post(f"http://localhost:8080/currency_add?code={code}&fullname={fullname}&sign={sign}")
+    json_form = req.json()
+    
+    if req.status_code == 200:
+        code_mes = "success"
+    else:
+        code_mes = "error"
+    return render_template('pages/currency-add.html', code1 = code_mes, data = json_form)
 
 
 @app.route('/rate')
@@ -52,12 +58,14 @@ def show_rate():
     json_form = req.json()
     return render_template('pages/rate.html', data = json_form)
 
+
 @app.route('/change_rate')
 def change_rate():
     #sending get request to get list of exchange rates that exist
     req = requests.get("http://localhost:8080/exchangeRates")
     json_form = req.json()
     return render_template('pages/change-rate.html', data = json_form)
+
 
 @app.route('/add_rate')
 def add_rate():
@@ -78,7 +86,11 @@ def add_rate_process():
     #sending get request to get list of currencies
     req = requests.get("http://localhost:8080/currency")
     json_form = req.json()
-    return render_template('pages/rate-add.html', code1 = "success", data=json_form)
+    if req.status_code == 200:
+        code_mes = "success"
+    else:
+        code_mes = "error"
+    return render_template('pages/rate-add.html', code1 = code_mes, data=json_form)
 
 
 @app.route('/make_exchange')
@@ -111,7 +123,12 @@ def exchange_detect():
     #sending request to get rate's list
     req2 = requests.get("http://localhost:8080/exchangeRates")
     json_form2 = req2.json()
-    return render_template('pages/exchange-result.html', data = json_form2, data_rate = json_form, code1 = "success" if amount != "0" else "error")
+    if req.status_code == 200:
+        code_mes = "success"
+    else:
+        code_mes = "error"
+    return render_template('pages/exchange-result.html', data = json_form2, data_rate = json_form, code1 = code_mes if amount != "0" else "error")
+
 
 @app.route('/change_rate_process')
 def change_rate_process():
@@ -134,4 +151,8 @@ def change_rate_process():
     #sending request to get rate's list
     req = requests.get("http://localhost:8080/exchangeRates")
     json_form = req.json()
-    return render_template('pages/change-rate.html', data=json_form, code1 = "success")
+    if req.status_code == 200:
+        code_mes = "success"
+    else:
+        code_mes = "error"
+    return render_template('pages/change-rate.html', data=json_form, code1 = code_mes)

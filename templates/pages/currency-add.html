@@ -31,7 +31,10 @@
             <div class="alert alert-success" role="alert">Currency was added successfully!</div>
             {%elif code1 == "error"%}
             <br>
-            <div class="alert alert-danger" role="alert">Currency wasn't added!</div>
+            <div class="alert alert-danger" role="alert">Currency wasn't added!<br>
+              Error message:
+                {{data.message}}
+            </div>
             {% endif %}
         </div>
 </body>

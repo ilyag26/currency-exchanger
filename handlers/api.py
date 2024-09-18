@@ -16,8 +16,11 @@ def currency_add():
     code = request.args.get('code')
     fullname = request.args.get('fullname')
     sign = request.args.get('sign')
-    db1.add_currency(code, fullname, sign)
-    return jsonify(db1.show_currency_url(code)), 200
+    if db1.check_exist('code', code) == True:
+        return jsonify(message_show("Pare already exist")), 400
+    else:
+        db1.add_currency(code, fullname, sign)
+        return jsonify(db1.show_currency_url(code)), 200
 
 
 # request to create new exchange pare

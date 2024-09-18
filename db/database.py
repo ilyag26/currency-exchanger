@@ -61,6 +61,14 @@ def formate_exchange_amount(data, amount, converted_amount):
 # class that describes methods for working with the database
 class Db:
 
+    # Check currency exist by code
+    def check_exist(self, column, code):
+        code_target = self.cursor.execute(f"SELECT * FROM `Currencies` WHERE {column} = ?", (code,))
+        if not code_target.fetchall():
+            return False
+        else:
+            return True
+        
     # function for initialization connection to db
     def __init__(self, db_file):
         self.conn = sqlite3.connect(db_file)
@@ -118,9 +126,13 @@ class Db:
 
     # POST request to add specific currency to db by
     def add_currency(self, code, fullname, sign):
-        self.cursor.execute("INSERT INTO `Currencies` (`code`,`fullname`, `sign`) VALUES (?,?,?)",
+        if not self.check_exist('code', code):
+            self.cursor.execute("INSERT INTO `Currencies` (`code`,`fullname`, `sign`) VALUES (?,?,?)",
                             (code, fullname, sign))
-        return self.conn.commit()
+            self.conn.commit()
+            return True
+        else:
+            return False
 
     # POST request to add specific exchange with rate to db
     def add_currency_rate(self, id1, id2, rate):
@@ -129,17 +141,21 @@ class Db:
             (id1, id2, rate))
         return self.conn.commit()
 
+    # Get id of target currency by id
     def get_id_target(self, id):
         code_target = self.cursor.execute(f"SELECT `targetcurrencyid` FROM `ExchangeRates` WHERE id = ?", (id,))
         return code_target.fetchall()[0]
     
+    # Get id of base currency by id
     def get_id_base(self, id):
         code_target = self.cursor.execute(f"SELECT `basecurrencyid` FROM `ExchangeRates` WHERE id = ?", (id,))
         return code_target.fetchall()[0]
     
+    # Get code of currency by id
     def get_code_currency(self, id):
         code_target = self.cursor.execute(f"SELECT `code` FROM `Currencies` WHERE id = ?", (id,))
         return code_target.fetchall()[0]
+    
 
     # GET request to get specific exchange rate by id from db by id(EX: 1)
     def show_exchange_pare(self, code):
