@@ -9,7 +9,37 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </head>
 <body>
-        <div class="container bg-light p-5">
+  <div class="conteiner">
+    <div class="bar">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="/">Main</a>
+          </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/currency_list">Available currencies</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/add_currency">Add currency</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/rate">Check rate</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/add_rate">Add new rate</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/make_exchange">Make exchange</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/change_rate">Change rate</a>
+            </li>
+        <ul>
+    </div>
+    <div class="main">
+      <h1 class="display-4">Make exchange:</h1>
+      <hr>
+      <form action="{{ url_for('exchange_detect') }}" method="GET">
+          <div class="mb-3">
             <h1 class="display-4">Add currency to data base:</h1>
             <form action="{{ url_for('add_currency_result') }}" method="POST">
                 <div class="mb-3">
@@ -36,6 +66,7 @@
                 {{data.message}}
             </div>
             {% endif %}
-        </div>
+    </div>
+</div>
 </body>
 </html>

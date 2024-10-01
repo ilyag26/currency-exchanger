@@ -5,9 +5,30 @@ body{
 
 a{
     text-decoration: none;
-    color:white;
 }
 
 .btn{
     margin-top:10px;
+}
+.conteiner{
+    display: flex;
+    justify-content: center;
+}
+.main{
+    margin: 15px auto;
+    padding: 20px;
+    width: 100%;
+}
+.bar{
+    background-color: #bcbec0;
+    width: 20%;
+    padding: 2px;
+    text-align: center;
+    min-height: 100dvh;
+}
+.nav{
+    margin-top: 80%;
+}
+a{
+    color:white;
 }
