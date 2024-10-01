@@ -39,17 +39,19 @@
             <h1 class="display-4">Available currencies:</h1>
             <hr>
             {% for content in data %}
-            <ul>
-                <li style="font-weight: bold;">Id: {{content.id}}</li>
-                <li>Code: {{content.code}}</li>
-                <li>Name: {{content.fullname}}</li>
-                <li>Sign: {{content.sign}}</li>
-            </ul>
+            <div class="conteiner">
+                <ul>
+                    <li style="font-weight: bold;">Id: {{content.id}}</li>
+                    <li>Code: {{content.code}}</li>
+                    <li>Name: {{content.fullname}}</li>
+                    <li>Sign: {{content.sign}}</li>
+                </ul>
 
-            <a href="/delete?id={{content.id}}"><img src="{{ url_for('static', filename='img/delete.png') }}" style="width:3%; height:3%;"></a>
-            
-            <hr class="my-4">
-            {% endfor %}
+                <a href="/delete?id={{content.id}}"><img src="{{ url_for('static', filename='img/delete.png') }}" style="width:3%; height:3%;"></a>
+                
+                <hr class="my-4">
+                {% endfor %}
+            </div>
         </div>
     </div>
 </body>

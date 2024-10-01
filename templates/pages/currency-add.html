@@ -36,11 +36,10 @@
         <ul>
     </div>
     <div class="main">
-      <h1 class="display-4">Make exchange:</h1>
+      <h1 class="display-4">Add currency to data base:</h1>
       <hr>
       <form action="{{ url_for('exchange_detect') }}" method="GET">
           <div class="mb-3">
-            <h1 class="display-4">Add currency to data base:</h1>
             <form action="{{ url_for('add_currency_result') }}" method="POST">
                 <div class="mb-3">
                   <label for="nameInput" class="form-label">Currency name</label>
