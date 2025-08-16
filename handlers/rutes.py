@@ -42,6 +42,15 @@ def list_currency():
     json_form, json_form2 = get_data()
     return render_template('index.html', data = json_form, data2 = json_form2, data_currency = json_form)
 
+@app.route('/currency_code', methods=['GET'])
+def code_currency():
+    code = request.args.get('code')
+    #sending get request to get list of currencies
+    req = requests.get(url+f"/currency/{code}")
+    json_form3 = req.json()
+    json_form, json_form2 = get_data()
+    return render_template('index.html', data = json_form, data2 = json_form2, data_code = json_form3)
+
 @app.route('/process_currency', methods=['POST'])
 def add_currency_result():
     #getting url params from request
@@ -67,13 +76,6 @@ def show_rate():
     json_form3 = req.json()
     json_form, json_form2 = get_data()
     return render_template('index.html', data = json_form, data2 = json_form2, data_rates = json_form3)
-
-@app.route('/rate_list_delete')
-def list_rate_delete():
-    #sending get request to get list of rates
-    req = requests.get(url+"/exchangeRates")
-    json_form = req.json()
-    return render_template('pages/rate-list.html', data = json_form)
 
 @app.route('/add_rate')
 def add_rate():

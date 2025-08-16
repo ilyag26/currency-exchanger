@@ -23,16 +23,18 @@
                     <a href="/currency_list_delete"><button class="btn btn-primary" type="button">DELETE CURRENCY</button></a>
                     
                     <h5>Get currency by CODE</h5>
-                    <input placeholder="USD"/><br>
-                    <button class="btn btn-primary" type="button">GET CURRENCIES</button>
+                    <form action="{{ url_for('code_currency') }}" method="GET">
+                        <input type="text" name="code" placeholder="USD"/><br>
+                        <button type="submit" class="btn btn-primary" type="button">GET CURRENCY</button>
+                    </form>
 
                     <h5>Add new currency</h5>
                     <form action="{{ url_for('add_currency_result') }}" method="POST">
-                            <div class="mb-3">
+                        <div class="mb-3">
                             <label for="nameInput" class="form-label">Currency name</label>
                             <input type="text" class="form-control" id="nameInput" name="fullname" placeholder="Euro">
-                            </div>
-                            <div class="mb-3">
+                        </div>
+                        <div class="mb-3">
                             <label for="codeInput" class="form-label">Currency code</label>
                             <input type="text" class="form-control" id="codeInput" name="code" placeholder="EUR">
                         </div>
@@ -54,7 +56,10 @@
                     {% endif %}
                     {%if data_currency %}
                     <p class="alert alert-primary" role="alert">{{data_currency}}</p>   
-                    {% endif %}             
+                    {% endif %}           
+                    {%if data_code %}
+                    <p class="alert alert-primary" role="alert">{{data_code}}</p>   
+                    {% endif %}      
                 </div>
                 <div class="col">
                     <h3>Currency exchange</h3>
@@ -165,7 +170,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="signInput" class="form-label">Amount:</label>
-                        <input type="text" class="form-control" id="rateInput" value="0" name="amount">
+                        <input type="text" class="form-control" id="rateInput" placeholder="100" name="amount">
                     </div>
                     <button type="submit" class="btn btn-primary">Exchange</button>
                 </form>
