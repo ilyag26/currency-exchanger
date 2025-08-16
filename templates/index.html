@@ -10,35 +10,194 @@
 </head>
 <body>
     <div class="conteiner">
-        <div class="bar">
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a class="nav-link active" href="/">Main</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/currency_list">Available currencies</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/add_currency">Add currency</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/rate">Check rate</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/add_rate">Add new rate</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/make_exchange">Make exchange</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/change_rate">Change rate</a>
-                </li>
-            <ul>
-        </div>
         <div class="main">
             <h1>Currency Converter</h1>
+            <h4>Test interface for REST API</h4>
             <hr>
-            <h4>Check live foreign currency exchange rates</h4>
+            <div class="container text-center">
+            <div class="row">
+                <div class="col">
+                    <h3>Currencies</h3>
+                    <h5>Get all currencies</h5>
+                    <a href="/currency_list"><button class="btn btn-primary" type="button">GET DATA</button></a><br>
+                    <a href="/currency_list_delete"><button class="btn btn-primary" type="button">DELETE CURRENCY</button></a>
+                    
+                    <h5>Get currency by CODE</h5>
+                    <input placeholder="USD"/><br>
+                    <button class="btn btn-primary" type="button">GET CURRENCIES</button>
+
+                    <h5>Add new currency</h5>
+                    <form action="{{ url_for('add_currency_result') }}" method="POST">
+                            <div class="mb-3">
+                            <label for="nameInput" class="form-label">Currency name</label>
+                            <input type="text" class="form-control" id="nameInput" name="fullname" placeholder="Euro">
+                            </div>
+                            <div class="mb-3">
+                            <label for="codeInput" class="form-label">Currency code</label>
+                            <input type="text" class="form-control" id="codeInput" name="code" placeholder="EUR">
+                        </div>
+                        <div class="mb-3">
+                            <label for="signInput" class="form-label">Currency sign</label>
+                            <input type="text" class="form-control" id="signInput" name="sign" placeholder="€">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </form>
+                    {%if code_status_add == "success"%}
+                    <br>
+                    <div class="alert alert-success" role="alert">Currency was added successfully!</div>
+                    {%elif code_status_add == "error"%}
+                    <br>
+                    <div class="alert alert-danger" role="alert">Currency wasn't added!<br>
+                    Error message:
+                        {{data3.message}}
+                    </div>
+                    {% endif %}
+                    {%if data_currency %}
+                    <p class="alert alert-primary" role="alert">{{data_currency}}</p>   
+                    {% endif %}             
+                </div>
+                <div class="col">
+                    <h3>Currency exchange</h3>
+                    <h5>Get rate list</h5>
+                    <a href="/rate_list"><button class="btn btn-primary" type="button">GET RATES</button></a><br>
+                    <a href="/rate_list_delete"><button class="btn btn-primary" type="button">DELETE RATE PARE</button></a>
+                    <h5>Update currency rate</h5>
+                    <form action="{{ url_for('change_rate_process') }}" method="GET">
+                    <div class="mb-3">
+                        <label for="nameInput" class="form-label">Choose pare:</label><br>
+                        <select id="firstCurrency" name="pare_id">
+
+                        {% for content in data2 %}
+                        
+                        <option value="{{content.id}}">
+                            {% for content2 in content.baseCurrencyId %}
+                            {{content2.code}}
+                            {% endfor %}/
+                            {% for content2 in content.targetCurrencyId %}
+                            {{content2.code}}
+                            {% endfor %}
+                        </option>
+
+                        {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="signInput" class="form-label">New rate</label>
+                        <input type="text" class="form-control" id="rateInput" name="rate" placeholder="100">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update rate</button>
+                </form>
+
+                {%if status_code == "success" %}
+                <br>
+                <div class="alert alert-success" role="alert">
+                    Rate was changed sucessfully<br>
+                </div>
+                {%elif status_code == "error"%}
+                    <br>
+                    <div class="alert alert-danger" role="alert">The value must not be 0!</div>
+                {% endif %}
+                
+                <h5>Add new rate exchange to data base:</h5>
+                <form action="{{ url_for('add_rate_process') }}" method="POST">
+                    <div class="mb-3">
+                    <label for="nameInput" class="form-label">First currency id:</label><br>
+                    <select id="firstCurrency" name="id1">
+                        {% for content in data %}
+                    
+                        <option value="{{content.id}}">
+                        {{content.code}}
+                        </option>
+                    
+                        {% endfor %}
+                    </select>
+                    </div>
+                    <div class="mb-3">
+                    <label for="codeInput" class="form-label">Second currency id:</label><br>
+                    <select id="secondCurrency" name="id2">
+                        {% for content in data %}
+                        
+                        <option value="{{content.id}}">
+                        {{content.code}}
+                        </option>
+                    
+                        {% endfor %}
+                    </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="signInput" class="form-label">Currency rate</label>
+                        <input type="text" class="form-control" id="rateInput" name="rate" placeholder="100">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </form>
+                {%if code_status == "success"%}
+                <br>
+                <div class="alert alert-success" role="alert">Rate was added successfully!</div>
+                {%elif code_status == "error"%}
+                <br>
+                <div class="alert alert-danger" role="alert">Rate wasn't added!</div>
+                {% endif %}
+                {%if data_rates %}
+                <p class="alert alert-primary" role="alert">{{data_rates}}</p>   
+                {% endif %}    
+                </div>
+                <div class="col">
+                <h3>CONVERTER</h3>
+                <h5>Make exchange:</h5>
+                <form action="{{ url_for('exchange_detect') }}" method="GET">
+                    <div class="mb-3">
+                        <label for="nameInput" class="form-label">Choose pare:</label><br>
+                        <select id="firstCurrency" name="pare_id">
+        
+                        {% for content in data2 %}
+                        
+                        <option value="{{content.id}}">
+                            {% for content2 in content.baseCurrencyId %}
+                            {{content2.code}}
+                            {% endfor %}/
+                            {% for content2 in content.targetCurrencyId %}
+                            {{content2.code}}
+                            {% endfor %}
+                        </option>
+        
+                        {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="signInput" class="form-label">Amount:</label>
+                        <input type="text" class="form-control" id="rateInput" value="0" name="amount">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Exchange</button>
+                </form>
+        
+                {%if code1 == "success" %}
+                <br>
+                <div class="alert alert-primary" role="alert">
+                    Exchange result:<br>
+                    
+                    {% for content in data_rate %}
+        
+                    {{content.amount}}
+        
+                    {% for content2 in content.baseCurrencyId %}
+                        {{content2.sign}}
+                    {% endfor %} ->
+        
+                        {{content.convertedAmount}}
+        
+                    {% for content2 in content.targetCurrencyId %}
+                        {{content2.sign}}
+                    {% endfor %}
+        
+                    {% endfor %}
+                </div>
+                {%elif code1 == "error"%}
+                    <br>
+                    <div class="alert alert-danger" role="alert">The value must not be 0!</div>
+                {% endif %}
+                </div>
+            </div>
+            </div>
         </div>
     </div>
 </body> 

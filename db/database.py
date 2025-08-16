@@ -186,6 +186,10 @@ class Db:
         self.cursor.execute("DELETE FROM `ExchangeRates` WHERE basecurrencyid = ? OR basecurrencyid = ?", (id,id,))
         return self.conn.commit()
     
+    def delete_rate_id(self, id):
+        self.cursor.execute("DELETE FROM `ExchangeRates` WHERE id = ?", (id,))
+        return self.conn.commit()
+    
     # function to close connection
     def close(self):
         self.conn.close()

@@ -10,33 +10,12 @@
 </head>
 <body>
     <div class="conteiner">
-        <div class="bar">
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a class="nav-link active" href="/">Main</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="/currency_list">Available currencies</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/add_currency">Add currency</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/rate">Check rate</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/add_rate">Add new rate</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/make_exchange">Make exchange</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/change_rate">Change rate</a>
-                </li>
-            <ul>
-        </div>
         <div class="main">
-            <h1 class="display-4">Rates:</h1>
+            <h1 class="display-4">Available rates:</h1>
+            <hr>
+            <h5>Json response:</h5>
+            <div class="alert alert-primary" role="alert">{{data}}</div>
+            <h5>Formated result:</h5>
             <hr>
             {% for content in data %}
             <ul>
@@ -50,10 +29,12 @@
                     {% endfor %}
                 </li>
                 <li>Pare id: {{content.id}}</li>
-                <li>Rate: {{content.rate}}</li>
-                <hr class="my-4">
+                <li>Rate: {{content.rate}}</li>          
             </ul>
+                <a href="/rate_delete?id={{content.id}}"><img src="{{ url_for('static', filename='img/delete.png') }}" style="width:3%; height:3%;"></a>
+                <hr class="my-4">
             {% endfor %}
+        <a href="/"><button class="btn btn-primary">Back</button></a> 
         </div>
     </div>
 </body>

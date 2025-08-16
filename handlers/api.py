@@ -7,7 +7,6 @@ def error():
         message = "Page not found"
     ), 404
 
-
 # request to add new currency
 @app.route('/currency_add', methods=['POST'])
 def currency_add():
@@ -22,7 +21,6 @@ def currency_add():
         db1.add_currency(code, fullname, sign)
         return jsonify(db1.show_currency_url(code)), 200
 
-
 # request to create new exchange pare
 @app.route('/exchangeRates', methods=['POST'])
 def exchange_rates_add():
@@ -33,13 +31,11 @@ def exchange_rates_add():
     db1.add_currency_rate(id1, id2, rate)
     return message_show("Success"), 200
 
-
 # getting all currency that has database
 @app.route('/currency', methods=['GET'])
 def currency():
     db1 = Db(db_path)
     return jsonify(db1.show_currency())
-
 
 # getting all exchange pares that exist
 @app.route('/exchangeRates', methods=['GET'])
@@ -47,13 +43,11 @@ def exchange_rates():
     db1 = Db(db_path)
     return jsonify(db1.show_exchange()), 200
 
-
 # getting currency by code(EX: USD)
 @app.route('/currency/<code>', methods=['GET'])
 def currency_path(code):
     db1 = Db(db_path)
     return jsonify(db1.show_currency_url(code)) if db1.show_currency_url(code) else message_show("Currency not exist"), 200 if db1.show_currency_url(code) else 404
-
 
 # request to show rate and pare exchange
 @app.route('/exchangeRate/<code>', methods=['GET'])
@@ -72,7 +66,6 @@ def exchange_path(code):
     return jsonify(
         formate_data_exchange(rate) if rate else message_show("This pares not existed")
     ), 200 if rate else 404
-
 
 # request to change rate
 @app.route('/exchangeRate/<code>', methods=['PATCH'])
@@ -94,7 +87,6 @@ def exchange_path_edit(code):
         first_code = 0
         second_code = 0
     return message_show("Sucess") if first_code != 0 and second_code != 0 else message_show("Pare not exist"), 200 if rate else 404
-
 
 # request to calculation of the transfer of a certain amount of funds from one currency to another
 @app.route("/exchange", methods=["GET"])
@@ -131,3 +123,10 @@ def delete_currency():
     id = request.args.get("id")
     db1.delete_currency_id(id)
     return jsonify(message_show("Currency was deleted successfully!"))
+
+@app.route("/delete_rate", methods=['DELETE'])
+def delete_rate():
+    db1 = Db(db_path)
+    id = request.args.get("id")
+    db1.delete_rate_id(id)
+    return jsonify(message_show("Rate was deleted successfully!"))
