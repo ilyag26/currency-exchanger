@@ -133,6 +133,12 @@ def exchange_detect():
                            data3 = json_form3, data_rate = json_form3,
                             code1 = code_mes if amount != "0" else "error")
 
+@app.route('/rate_list_delete')
+def list_exchange_rate():
+    req = requests.get(url+"/exchangeRates")
+    json_form3 = req.json()
+    return render_template('pages/rate-list.html', data = json_form3)
+
 @app.route('/change_rate_process')
 def change_rate_process():
     db1 = Db(db_path)
